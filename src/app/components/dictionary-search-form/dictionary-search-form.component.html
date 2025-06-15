@@ -1,0 +1,7 @@
+<ion-searchbar
+  (ionChange)="onInputChange($event)"
+  show-clear-button="always"
+  placeholder="検索"
+  [value]="searchQuery"
+></ion-searchbar>
+<ion-button expand="block" (click)="onSubmit()">Search</ion-button>

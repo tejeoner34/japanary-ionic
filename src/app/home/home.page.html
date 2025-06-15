@@ -1,20 +1,20 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title> Japanary </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+<ion-content class="ion-padding ion-text-center">
+  <div class="flex-center">
+    <ion-label>
+      <h1>Japanese Dictionary</h1>
+      <p>Search for a word in Kanji, Hiragana or Katakana. Ex: 辞書</p>
+    </ion-label>
   </div>
 </ion-content>
+
+<ion-footer class="ion-padding">
+  <app-dictionary-search-form
+    (search)="onSearch($event)"
+  ></app-dictionary-search-form>
+</ion-footer>
