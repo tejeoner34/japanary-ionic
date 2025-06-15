@@ -1,0 +1,7 @@
+{
+  "name": "japanary-ionic",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
