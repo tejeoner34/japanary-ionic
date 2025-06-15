@@ -1,7 +1,14 @@
 <ion-searchbar
-  (ionChange)="onInputChange($event)"
+  (ionInput)="onInputChange($event)"
   show-clear-button="always"
   placeholder="検索"
   [value]="searchQuery"
 ></ion-searchbar>
-<ion-button expand="block" (click)="onSubmit()">Search</ion-button>
+<ion-button
+  expand="block"
+  color="dark"
+  (click)="onNavigate()"
+  [disabled]="!searchQuery"
+>
+  Search</ion-button
+>

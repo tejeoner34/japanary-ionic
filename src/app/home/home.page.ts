@@ -25,8 +25,4 @@ import { DictionarySearchFormComponent } from '../components/dictionary-search-f
 })
 export class HomePage {
   constructor() {}
-
-  onSearch(query: string) {
-    console.log('Search query:', query);
-  }
 }

@@ -1,5 +1,7 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { IonSearchbar, IonButton } from '@ionic/angular/standalone';
+import { APP_ROUTES } from 'src/app/app.routes';
 
 @Component({
   selector: 'app-dictionary-search-form',
@@ -9,18 +11,18 @@ import { IonSearchbar, IonButton } from '@ionic/angular/standalone';
   imports: [IonButton, IonSearchbar],
 })
 export class DictionarySearchFormComponent {
+  readonly routes = APP_ROUTES;
   searchQuery: string = '';
-  @Output() search = new EventEmitter<string>();
-  constructor() {}
+  constructor(private router: Router) {}
 
   onInputChange(event: any) {
-    this.searchQuery = event.target.value;
+    const trimmedValue = event.target.value.trim();
+    this.searchQuery = trimmedValue;
   }
 
-  onSubmit() {
-    if (this.searchQuery.trim()) {
-      this.search.emit(this.searchQuery.trim());
-      this.searchQuery = '';
+  onNavigate() {
+    if (this.searchQuery) {
+      this.router.navigate([this.routes.search(this.searchQuery)]);
     }
   }
 }
