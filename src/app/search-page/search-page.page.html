@@ -1,13 +1,13 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>search-page</ion-title>
+    <ion-title>Results</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">search-page</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+<ion-content [fullscreen]="true"> </ion-content>
+
+<ion-footer class="ion-padding">
+  <app-dictionary-search-form
+    [searchQuery]="searchQuery"
+  ></app-dictionary-search-form>
+</ion-footer>

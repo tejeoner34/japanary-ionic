@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonSearchbar, IonButton } from '@ionic/angular/standalone';
 import { APP_ROUTES } from 'src/app/app.routes';
@@ -12,7 +12,7 @@ import { APP_ROUTES } from 'src/app/app.routes';
 })
 export class DictionarySearchFormComponent {
   readonly routes = APP_ROUTES;
-  searchQuery: string = '';
+  @Input() searchQuery: string = '';
   constructor(private router: Router) {}
 
   onInputChange(event: any) {

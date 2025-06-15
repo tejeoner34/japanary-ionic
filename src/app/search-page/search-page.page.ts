@@ -6,7 +6,9 @@ import {
   IonHeader,
   IonTitle,
   IonToolbar,
+  IonFooter,
 } from '@ionic/angular/standalone';
+import { DictionarySearchFormComponent } from '../components/dictionary-search-form/dictionary-search-form.component';
 
 @Component({
   selector: 'app-search-page',
@@ -14,18 +16,23 @@ import {
   styleUrls: ['./search-page.page.scss'],
   standalone: true,
   imports: [
+    IonFooter,
     IonContent,
     IonHeader,
     IonTitle,
     IonToolbar,
     CommonModule,
     FormsModule,
+    DictionarySearchFormComponent,
   ],
 })
 export class SearchPagePage {
   @Input() set query(searchQuery: string) {
     console.log('Search query:', searchQuery);
+    this.searchQuery = searchQuery;
   }
+
+  searchQuery: string = '';
 
   constructor() {}
 }
