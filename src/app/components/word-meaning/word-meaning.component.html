@@ -1,0 +1,50 @@
+@for (sense of senses; track sense; let senseIndex = $index) {
+<div
+  class="flex flex-col mb-4 pb-2 gap-1"
+  [class.border-b-2]="senseIndex !== senses.length - 1"
+>
+  <p>
+    <span class="font-semibold">Word type:</span>
+    {{ sense.wordTypes[0] }}
+  </p>
+
+  <div class="flex">
+    <span>{{ senseIndex + 1 }}.&nbsp;</span>
+    <p class="font-semibold">
+      @for (meaning of sense.englishDefinitions; track meaning; let meaningIndex
+      = $index) {
+      {{ meaning }}
+      @if(meaningIndex < sense.englishDefinitions.length - 1) {
+      <span>, </span>
+      } }
+    </p>
+  </div>
+
+  @if (sense.tags.length) {
+  <span class="text-sm">
+    Tags: @for (tag of sense.tags; track tagIndex; let tagIndex = $index) {
+    {{ tag }}
+    @if(tagIndex < sense.tags.length - 1) {
+    <span class="text-gray-500">|</span>
+    } }
+  </span>
+  }
+
+  <!-- @if (sense.seeAlso.length) {
+      <div class="flex items-center gap-2">
+        <p><span class="font-semibold">See also:</span></p>
+        <div class="flex gap-2 flex-wrap">
+          @for (item of sense.seeAlso; track item) {
+            <ion-button
+              size="small"
+              fill="outline"
+              (click)="searchWord(item)"
+            >
+              {{ item }}
+            </ion-button>
+          }
+        </div>
+      </div>
+    } -->
+</div>
+}

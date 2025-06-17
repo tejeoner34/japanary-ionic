@@ -4,9 +4,17 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true"> </ion-content>
+<ion-content [fullscreen]="true">
+  @if(loading$ | async) {
+  <app-search-item-skeleton [numberOfItems]="9"></app-search-item-skeleton>
+  } @else {
+  <app-search-item-list
+    [items]="(results$ | async) ?? []"
+  ></app-search-item-list>
+  }
+</ion-content>
 
-<ion-footer class="ion-padding">
+<ion-footer class="ion-padding" [translucent]="true">
   <app-dictionary-search-form
     [searchQuery]="searchQuery"
   ></app-dictionary-search-form>

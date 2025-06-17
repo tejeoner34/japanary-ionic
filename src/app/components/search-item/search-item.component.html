@@ -1,0 +1,30 @@
+<ion-card class="ion-padding">
+  <ion-card-header>
+    <ion-card-title class="ion-text-wrap">
+      <ruby class="text-2xl font-semibold">
+        {{ searchResult.slug }}
+        @if (searchResult.japaneseReadings[0].reading) {
+        <rt class="text-xs font-normal">{{
+          searchResult.japaneseReadings[0].reading
+        }}</rt>
+        }
+      </ruby>
+    </ion-card-title>
+
+    <ion-card-subtitle>
+      <ion-chip color="primary">
+        {{ searchResult.isCommon ? "Common" : "Not common" }}
+      </ion-chip>
+
+      @for (level of searchResult.jlptLevels; track level) {
+      <ion-chip color="secondary">
+        {{ level }}
+      </ion-chip>
+      }
+    </ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content>
+    <app-word-meaning [senses]="searchResult.senses"></app-word-meaning>
+  </ion-card-content>
+</ion-card>
