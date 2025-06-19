@@ -13,6 +13,8 @@ import {
   IonToolbar,
   IonButton,
   IonInput,
+  IonButtons,
+  IonMenuButton,
 } from '@ionic/angular/standalone';
 import { AuthService } from '../services/auth.service';
 import { RouterLink } from '@angular/router';
@@ -23,6 +25,8 @@ import { RouterLink } from '@angular/router';
   styleUrls: ['./login.page.scss'],
   standalone: true,
   imports: [
+    IonMenuButton,
+    IonButtons,
     IonInput,
     IonButton,
     IonContent,

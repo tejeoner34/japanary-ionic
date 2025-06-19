@@ -6,6 +6,8 @@ import {
   IonContent,
   IonLabel,
   IonFooter,
+  IonButtons,
+  IonMenuButton,
 } from '@ionic/angular/standalone';
 import { DictionarySearchFormComponent } from '../components/dictionary-search-form/dictionary-search-form.component';
 
@@ -14,9 +16,11 @@ import { DictionarySearchFormComponent } from '../components/dictionary-search-f
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   imports: [
+    IonButtons,
     IonFooter,
     IonLabel,
     IonHeader,
+    IonMenuButton,
     IonToolbar,
     IonTitle,
     IonContent,
