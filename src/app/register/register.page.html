@@ -1,13 +1,58 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>register</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Register</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">register</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding ion-text-center">
+  <form
+    class="flex-center"
+    id="form"
+    [formGroup]="form"
+    (ngSubmit)="register()"
+  >
+    <ion-input
+      label="Email:"
+      labelPlacement="stacked"
+      formControlName="email"
+      required
+      helperText="Enter a valid email"
+      errorText="Invalid email"
+    ></ion-input>
+
+    <ion-input
+      label="Password:"
+      labelPlacement="stacked"
+      type="password"
+      required
+      formControlName="password"
+      helperText="Enter a valid password (6 characters minimum)"
+      errorText="Invalid password"
+    ></ion-input>
+
+    <ion-input
+      label="Confirm Password:"
+      labelPlacement="stacked"
+      type="password"
+      required
+      formControlName="confirmPassword"
+      helperText="Confirm your password"
+      errorText="Passwords do not match"
+    ></ion-input>
+
+    <div class="ion-padding">
+      <ion-button expand="full" type="submit">Register</ion-button>
+      <ion-button
+        expand="full"
+        fill="clear"
+        color="secondary"
+        [routerLink]="['/login']"
+      >
+        Already have an account? Login here
+      </ion-button>
+    </div>
+  </form>
 </ion-content>

@@ -52,7 +52,6 @@ export class LoginPage {
 
   login() {
     if (this.form.valid) {
-      console.log(this.form.value);
       this.authService.signIn(this.email, this.password).subscribe((user) => {
         console.log('User logged in:', user);
       });
@@ -60,8 +59,6 @@ export class LoginPage {
       this.form.markAllAsTouched();
     }
   }
-
-  register() {}
 
   get email() {
     return this.form.get('email')?.value || '';

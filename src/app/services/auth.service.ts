@@ -26,8 +26,19 @@ export class AuthService {
   public error$ = this.errorSubject.asObservable();
   constructor() {}
 
-  async createUser(email: string, password: string) {
-    return createUserWithEmailAndPassword(auth, email, password);
+  createUser(
+    email: string,
+    password: string
+  ): Observable<UserCredential | null> {
+    return from(createUserWithEmailAndPassword(auth, email, password)).pipe(
+      tap(() => console.log('User created')),
+      catchError((error) => {
+        console.error('Registration error:', error);
+        this.errorSubject.next(error.message || 'Registration failed');
+        return of(null);
+      }),
+      finalize(() => this.loadingSubject.next(false))
+    );
   }
 
   signIn(email: string, password: string): Observable<UserCredential | null> {
