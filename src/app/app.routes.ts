@@ -15,6 +15,18 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./search-page/search-page.page').then((m) => m.SearchPagePage),
   },
+  {
+    path: 'decks',
+    loadComponent: () => import('./decks/decks.page').then( m => m.DecksPage)
+  },
+  {
+    path: 'login',
+    loadComponent: () => import('./login/login.page').then( m => m.LoginPage)
+  },
+  {
+    path: 'register',
+    loadComponent: () => import('./register/register.page').then( m => m.RegisterPage)
+  },
 ];
 
 export const APP_ROUTES = {

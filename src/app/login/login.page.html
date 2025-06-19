@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding ion-text-center">
+  <form class="flex-center" id="form" [formGroup]="form" (ngSubmit)="login()">
+    <ion-input
+      label="Email:"
+      labelPlacement="stacked"
+      formControlName="email"
+      required
+      helperText="Enter a valid email"
+      errorText="Invalid email"
+    ></ion-input>
+
+    <ion-input
+      label="Password:"
+      labelPlacement="stacked"
+      type="password"
+      required
+      formControlName="password"
+      helperText="Enter a valid password (6 characters minimum)"
+      errorText="Invalid password"
+    ></ion-input>
+
+    <div class="ion-padding">
+      <ion-button expand="full" type="submit">Login</ion-button>
+      <ion-button
+        expand="full"
+        fill="clear"
+        color="secondary"
+        [routerLink]="['/register']"
+      >
+        Don't have an account? Register here
+      </ion-button>
+    </div>
+  </form>
+</ion-content>
