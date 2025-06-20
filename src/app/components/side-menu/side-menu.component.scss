@@ -1,0 +1,13 @@
+.menu-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+ion-list {
+  flex-grow: 1; // take available space
+}
+
+.logout {
+  margin-top: auto; // pushes to the bottom
+}

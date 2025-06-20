@@ -7,7 +7,6 @@ import {
   IonTitle,
   IonToolbar,
   IonFooter,
-  IonList,
 } from '@ionic/angular/standalone';
 import { DictionarySearchFormComponent } from '../components/dictionary-search-form/dictionary-search-form.component';
 import { DictionaryService } from '../services/dictionary.service';
@@ -20,7 +19,6 @@ import { SearchItemListComponent } from '../components/search-item-list/search-i
   styleUrls: ['./search-page.page.scss'],
   standalone: true,
   imports: [
-    IonList,
     IonFooter,
     IonContent,
     IonHeader,

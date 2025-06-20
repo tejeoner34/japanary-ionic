@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { UserCredential } from 'firebase/auth';
 import {
   BehaviorSubject,
   catchError,
@@ -13,18 +12,30 @@ import {
   auth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  onAuthStateChanged,
+  UserCredential,
+  User,
 } from 'src/config/firebase';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private currentUserSubject = new BehaviorSubject<User | null>(null);
+  public currentUser$ = this.currentUserSubject.asObservable();
+
   private loadingSubject = new BehaviorSubject<boolean>(false);
   private errorSubject = new BehaviorSubject<string | null>(null);
 
   public loading$ = this.loadingSubject.asObservable();
   public error$ = this.errorSubject.asObservable();
-  constructor() {}
+
+  constructor() {
+    onAuthStateChanged(auth, (user) => {
+      console.log('user', user);
+      this.currentUserSubject.next(user);
+    });
+  }
 
   createUser(
     email: string,

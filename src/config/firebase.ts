@@ -13,6 +13,8 @@ export {
   sendEmailVerification,
   sendPasswordResetEmail,
   onAuthStateChanged,
+  User,
+  UserCredential,
 } from 'firebase/auth';
 export {
   setDoc,
