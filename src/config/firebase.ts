@@ -26,4 +26,6 @@ export {
   query,
   updateDoc,
   arrayUnion,
+  where,
+  writeBatch,
 } from 'firebase/firestore';
