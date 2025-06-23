@@ -1,5 +1,5 @@
 <ion-list>
   @for(deck of decks; track deck.id) {
-  <app-deck-item></app-deck-item>
+  <app-deck-item [deck]="deck"></app-deck-item>
   }
 </ion-list>

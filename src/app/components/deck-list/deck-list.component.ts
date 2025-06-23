@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Deck } from 'src/app/services/interfaces/deck.interface';
+import { DeckModel } from 'src/app/services/interfaces/deck.interface';
 import { IonList } from '@ionic/angular/standalone';
 import { DeckItemComponent } from '../deck-item/deck-item.component';
 
@@ -11,7 +11,7 @@ import { DeckItemComponent } from '../deck-item/deck-item.component';
   imports: [IonList, DeckItemComponent],
 })
 export class DeckListComponent {
-  @Input() decks: Deck[] = [];
+  @Input() decks: DeckModel[] = [];
 
   constructor() {}
 }

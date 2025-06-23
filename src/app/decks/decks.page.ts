@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
   IonContent,
@@ -23,6 +23,7 @@ import { FlashcardsService } from '../services/flashcards.service';
     CommonModule,
     FormsModule,
     DeckListComponent,
+    AsyncPipe,
   ],
 })
 export class DecksPage implements OnInit {

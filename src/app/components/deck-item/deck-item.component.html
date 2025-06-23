@@ -1,11 +1,24 @@
-<ion-card>
+<ion-card button>
   <ion-card-header>
-    <ion-card-title>Card Title</ion-card-title>
-    <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+    <ion-item lines="none">
+      <ion-card-title>{{ deck.name }}</ion-card-title>
+
+      <div slot="end" class="header-right">
+        <ion-text color="danger">
+          <span>{{ deck.cards.pendingStudyAmount }}</span>
+        </ion-text>
+        <ion-icon
+          name="options-outline"
+          size="medium"
+          aria-label="Options"
+        ></ion-icon>
+      </div>
+    </ion-item>
   </ion-card-header>
 
+  @if(deck.description) {
   <ion-card-content>
-    Here's a small text description for the card content. Nothing more, nothing
-    less.
+    {{ deck.description }}
   </ion-card-content>
+  }
 </ion-card>

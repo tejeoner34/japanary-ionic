@@ -1,11 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   IonCardContent,
-  IonCardSubtitle,
   IonCardHeader,
   IonCard,
   IonCardTitle,
+  IonItem,
+  IonIcon,
+  IonText,
 } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { optionsOutline } from 'ionicons/icons';
+import { DeckModel } from 'src/app/services/interfaces/deck.interface';
 
 @Component({
   selector: 'app-deck-item',
@@ -13,15 +18,20 @@ import {
   styleUrls: ['./deck-item.component.scss'],
   standalone: true,
   imports: [
+    IonText,
+    IonIcon,
+    IonItem,
     IonCardTitle,
     IonCard,
     IonCardHeader,
-    IonCardSubtitle,
     IonCardContent,
   ],
 })
-export class DeckItemComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit() {}
+export class DeckItemComponent {
+  @Input() deck: DeckModel = {} as DeckModel;
+  constructor() {
+    addIcons({
+      optionsOutline,
+    });
+  }
 }
