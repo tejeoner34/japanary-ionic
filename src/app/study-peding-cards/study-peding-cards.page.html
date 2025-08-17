@@ -1,0 +1,42 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Pending Study</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div>
+    <ion-button>Edit</ion-button>
+    <ion-button>Delete</ion-button>
+  </div>
+
+  <div>
+    <ion-text><h3>{{currentVisibleCard.front}}</h3></ion-text>
+  </div>
+
+  @if(isAnswerVisible) {
+  <div>
+    <ion-text><p>{{currentVisibleCard.back}}</p></ion-text>
+  </div>
+  }
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="block" class="ion-padding">Update deck</ion-button>
+
+    @if(isAnswerVisible) {
+    <div class="ion-padding result-buttons">
+      @for(button of resultButtons; track button) {
+      <ion-button [color]="button.color" size="large">
+        <ion-icon slot="icon-only" [name]="button.icon" size="large"></ion-icon>
+      </ion-button>
+      }
+    </div>
+    } @else {
+    <ion-button expand="block" class="ion-padding" (click)="showAnswer()"
+      >Show result</ion-button
+    >
+    }
+  </ion-toolbar>
+</ion-footer>

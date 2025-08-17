@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import {
   IonCardContent,
   IonCardHeader,
@@ -25,6 +26,7 @@ import { DeckModel } from 'src/app/services/interfaces/deck.interface';
     IonCard,
     IonCardHeader,
     IonCardContent,
+    RouterLink,
   ],
 })
 export class DeckItemComponent {
