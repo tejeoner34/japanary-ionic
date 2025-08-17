@@ -17,7 +17,7 @@ import {
   IonMenuButton,
 } from '@ionic/angular/standalone';
 import { AuthService } from '../services/auth.service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -40,6 +40,7 @@ import { RouterLink } from '@angular/router';
 })
 export class LoginPage {
   private authService = inject(AuthService);
+  private router = inject(Router);
   formBuilder = inject(FormBuilder);
   form: FormGroup;
 
@@ -54,6 +55,7 @@ export class LoginPage {
     if (this.form.valid) {
       this.authService.signIn(this.email, this.password).subscribe((user) => {
         console.log('User logged in:', user);
+        this.router.navigate(['/decks']);
       });
     } else {
       this.form.markAllAsTouched();

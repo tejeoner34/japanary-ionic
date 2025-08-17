@@ -16,7 +16,7 @@ import {
   IonButton,
   IonInput,
 } from '@ionic/angular/standalone';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { passwordsMatchValidator } from 'src/utils/validators';
 import { AuthService } from '../services/auth.service';
 
@@ -42,6 +42,7 @@ import { AuthService } from '../services/auth.service';
 export class RegisterPage {
   private authService = inject(AuthService);
   private formBuilder = inject(FormBuilder);
+  private router = inject(Router);
   form: FormGroup;
 
   constructor() {
@@ -64,6 +65,7 @@ export class RegisterPage {
     }
     this.authService.createUser(this.email, this.password).subscribe((user) => {
       console.log('User registered:', user);
+      this.router.navigate(['/decks']);
     });
   }
 
