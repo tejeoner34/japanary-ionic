@@ -40,6 +40,19 @@ export class FlashcardsService {
 
   constructor() {}
 
+  get defaultDeck(): DeckModel {
+    const currentDecks = this.decksSubject.getValue();
+    return currentDecks.find((deck) => deck.isDefault) || currentDecks[0];
+  }
+
+  loadDecksIfNeeded() {
+    const current = this.decksSubject.getValue();
+    if (!current || current.length === 0) {
+      return this.getDecks();
+    }
+    return of(current);
+  }
+
   createDeck(deck: DeckModel) {
     return defer(() => {
       const deckCollection = this._getDecksCollection();
@@ -67,7 +80,6 @@ export class FlashcardsService {
   getDecks() {
     return this._getDecksRawDecks().pipe(
       map((decks) => {
-        console.log('Decks retrieved:', decks);
         const processed = createDeckInstance(decks);
         localStorage.setItem(COLLECTIONS.DECKS, JSON.stringify(processed));
         localStorage.removeItem('cardsToUpdate');
@@ -98,7 +110,6 @@ export class FlashcardsService {
       });
     }).pipe(
       switchMap((uid) => {
-        console.log;
         const userRef = doc(db, 'users', uid);
         const decksRef = collection(userRef, COLLECTIONS.DECKS);
         return from(getDocs(decksRef)).pipe(
@@ -106,7 +117,6 @@ export class FlashcardsService {
             if (decksSnapshot.metadata.fromCache) {
               return throwError(() => new Error('Error retrieving decks'));
             }
-
             const decks = decksSnapshot.docs.map((deckDoc) => ({
               id: deckDoc.id,
               data: deckDoc.data() as DeckModel,
@@ -132,12 +142,26 @@ export class FlashcardsService {
               );
             });
 
+            if (!flashcardObservables.length) {
+              return of(
+                decks.map(({ id, data }) => ({
+                  ...data,
+                  id,
+                  cards: {
+                    pedingStudyCards: [],
+                    pendingStudyAmount: 0,
+                  },
+                }))
+              );
+            }
+
             return forkJoin(flashcardObservables).pipe(
               map((pendingResults) => {
                 return decks.map(({ id, data }) => {
                   const pending = pendingResults.find(
                     (res) => res.deckId === id
                   );
+
                   return {
                     ...data,
                     id,

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import {
   IonCardHeader,
   IonCard,
@@ -7,9 +7,13 @@ import {
   IonChip,
   IonCardContent,
   IonButton,
+  ModalController,
 } from '@ionic/angular/standalone';
 import { SearchResult } from 'src/app/services/interfaces/dictionary.interface';
 import { WordMeaningComponent } from '../word-meaning/word-meaning.component';
+import { AuthService } from 'src/app/services/auth.service';
+import { AsyncPipe } from '@angular/common';
+import { ModalCreateFlashcardComponent } from '../modal-create-flashcard/modal-create-flashcard.component';
 
 @Component({
   selector: 'app-search-item',
@@ -23,10 +27,30 @@ import { WordMeaningComponent } from '../word-meaning/word-meaning.component';
     IonCardTitle,
     IonCard,
     IonCardHeader,
+    IonButton,
     WordMeaningComponent,
+    AsyncPipe,
   ],
 })
 export class SearchItemComponent {
   @Input() searchResult: SearchResult = {} as SearchResult;
+
+  private authService = inject(AuthService);
+  private modalCtrl = inject(ModalController);
+  readonly currentUser$ = this.authService.currentUser$;
+
   constructor() {}
+
+  async onCreateCard() {
+    const modal = await this.modalCtrl.create({
+      component: ModalCreateFlashcardComponent,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      console.log('Card created:', data);
+    }
+  }
 }

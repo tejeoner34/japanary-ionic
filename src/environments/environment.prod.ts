@@ -9,4 +9,6 @@ export const environment = {
     appId: '1:466574338427:web:ebcb80632ebb38ab16b5de',
     measurementId: 'G-4QDF2PKVPS',
   },
+  apiBaseUrl:
+    'https://express-japanary-back-production.up.railway.app/dictionary',
 };

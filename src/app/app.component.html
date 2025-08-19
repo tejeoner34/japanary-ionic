@@ -1,13 +1,12 @@
 <ion-app>
-  <ion-menu contentId="main-content" type="overlay" side="start">
-    <app-side-menu></app-side-menu>
-  </ion-menu>
-
   @if(isLoading | async) {
   <div class="spinner-container">
     <ion-spinner></ion-spinner>
   </div>
   }@else {
+  <ion-menu contentId="main-content" type="overlay" side="start">
+    <app-side-menu></app-side-menu>
+  </ion-menu>
   <div class="ion-page" id="main-content">
     <ion-router-outlet></ion-router-outlet>
   </div>

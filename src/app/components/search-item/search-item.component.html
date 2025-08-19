@@ -26,5 +26,10 @@
 
   <ion-card-content>
     <app-word-meaning [senses]="searchResult.senses"></app-word-meaning>
+    @if(currentUser$ | async) {
+    <ion-button (click)="onCreateCard()" expand="block">
+      Create card
+    </ion-button>
+    }
   </ion-card-content>
 </ion-card>

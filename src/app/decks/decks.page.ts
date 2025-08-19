@@ -6,6 +6,8 @@ import {
   IonHeader,
   IonTitle,
   IonToolbar,
+  IonButtons,
+  IonMenuButton,
 } from '@ionic/angular/standalone';
 import { DeckListComponent } from '../components/deck-list/deck-list.component';
 import { FlashcardsService } from '../services/flashcards.service';
@@ -16,10 +18,12 @@ import { FlashcardsService } from '../services/flashcards.service';
   styleUrls: ['./decks.page.scss'],
   standalone: true,
   imports: [
+    IonButtons,
     IonContent,
     IonHeader,
     IonTitle,
     IonToolbar,
+    IonMenuButton,
     CommonModule,
     FormsModule,
     DeckListComponent,

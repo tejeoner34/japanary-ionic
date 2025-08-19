@@ -52,6 +52,7 @@ export class Deck implements DeckModel {
     return new Deck({
       name: 'Default',
       description: 'This is a default deck, you can modify or create new ones',
+      isDefault: true,
     });
   }
 

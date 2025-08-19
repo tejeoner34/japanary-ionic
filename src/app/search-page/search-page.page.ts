@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -7,11 +7,14 @@ import {
   IonTitle,
   IonToolbar,
   IonFooter,
+  IonButtons,
+  IonMenuButton,
 } from '@ionic/angular/standalone';
 import { DictionarySearchFormComponent } from '../components/dictionary-search-form/dictionary-search-form.component';
 import { DictionaryService } from '../services/dictionary.service';
 import { SearchItemSkeletonComponent } from '../components/search-item-skeleton/search-item-skeleton.component';
 import { SearchItemListComponent } from '../components/search-item-list/search-item-list.component';
+import { FlashcardsService } from '../services/flashcards.service';
 
 @Component({
   selector: 'app-search-page',
@@ -19,10 +22,12 @@ import { SearchItemListComponent } from '../components/search-item-list/search-i
   styleUrls: ['./search-page.page.scss'],
   standalone: true,
   imports: [
+    IonButtons,
     IonFooter,
     IonContent,
     IonHeader,
     IonTitle,
+    IonMenuButton,
     IonToolbar,
     CommonModule,
     FormsModule,
@@ -31,8 +36,9 @@ import { SearchItemListComponent } from '../components/search-item-list/search-i
     SearchItemListComponent,
   ],
 })
-export class SearchPagePage {
+export class SearchPagePage implements OnInit {
   private dictionaryService = inject(DictionaryService);
+  private flashcardsService = inject(FlashcardsService);
   public loading$ = this.dictionaryService.loading$;
   public results$ = this.dictionaryService.results$;
   public error$ = this.dictionaryService.error$;
@@ -44,4 +50,8 @@ export class SearchPagePage {
   searchQuery: string = '';
 
   constructor() {}
+
+  ngOnInit() {
+    this.flashcardsService.loadDecksIfNeeded().subscribe(console.log);
+  }
 }

@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Create Card</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()" [strong]="true">Cancel</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <form [formGroup]="form" class="flex-center">
+    <ion-list lines="none">
+      <ion-item>
+        <ion-select
+          formControlName="deck"
+          label="Select a deck"
+          [value]="defaultDeck.name"
+        >
+          @for(deck of decks; track deck) {
+          <ion-select-option [value]="deck.id">{{
+            deck.name
+          }}</ion-select-option>
+          }
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-checkbox
+          alignment="start"
+          label-placement="end"
+          formControlName="isDefaultDeck"
+          required
+          >Is default deck</ion-checkbox
+        >
+      </ion-item>
+      <ion-item>
+        <ion-input
+          formControlName="front"
+          label="Front"
+          placeholder="Type something here"
+          errorText="Add the front of the card"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-textarea
+          formControlName="back"
+          autoGrow
+          label="Back"
+          placeholder="Type something here"
+          errorText="Add the back of the card"
+        ></ion-textarea>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button
+      [disabled]="form.invalid"
+      expand="block"
+      fill="clear"
+      shape="round"
+      (click)="({})"
+    >
+      Create card
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
