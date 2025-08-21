@@ -23,7 +23,7 @@ import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { Deck, DeckModel } from './interfaces/deck.interface';
 import { FlashCardModel } from './interfaces/flashcard.interface';
 import { LocalFlashCardDataSourceImpl } from './implementations/localFlashcardDatasource.impl';
-import { createDeckInstance } from 'src/utils/firebase';
+import { createDeckInstance, flashcardAdapter } from 'src/utils/firebase';
 
 const COLLECTIONS = {
   USERS: 'users',
@@ -75,6 +75,34 @@ export class FlashcardsService {
         })
       );
     });
+  }
+
+  createFlashCard(flashCard: FlashCardModel): Observable<DeckModel[]> {
+    try {
+      const allCardsCollectionRef = collection(
+        this._getDeckDocRef(flashCard.deckId),
+        COLLECTIONS.FLASHCARDS
+      );
+
+      return from(
+        addDoc(allCardsCollectionRef, flashcardAdapter(flashCard))
+      ).pipe(
+        map(() => {
+          return [];
+        }),
+        catchError((error) => {
+          console.error('Error creating flashcard:', error);
+          return throwError(
+            () => new Error('Something went wrong while creating the flashcard')
+          );
+        })
+      );
+    } catch (error) {
+      console.error('Error preparing flashcard creation:', error);
+      return throwError(
+        () => new Error('User not logged in or invalid deck reference')
+      );
+    }
   }
 
   getDecks() {
@@ -190,5 +218,13 @@ export class FlashcardsService {
     }
     const userRef = doc(db, 'users', currentUserId);
     return collection(userRef, COLLECTIONS.DECKS);
+  }
+
+  private _getDeckDocRef(deckId: string) {
+    const currentUserId = auth.currentUser?.uid;
+    if (!currentUserId) {
+      throw new Error('User not logged in');
+    }
+    return doc(db, COLLECTIONS.USERS, currentUserId, COLLECTIONS.DECKS, deckId);
   }
 }

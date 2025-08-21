@@ -19,6 +19,7 @@ import {
 } from '@ionic/angular/standalone';
 import { FlashcardsService } from 'src/app/services/flashcards.service';
 import { DeckModel } from 'src/app/services/interfaces/deck.interface';
+import { FlashCard } from 'src/app/services/interfaces/flashcard.interface';
 
 @Component({
   selector: 'app-modal-create-flashcard',
@@ -75,7 +76,20 @@ export class ModalCreateFlashcardComponent implements OnInit {
     }
   }
 
-  create() {}
+  create() {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+    const newFlashCardData = new FlashCard({
+      front: this.form.value.front || '',
+      back: this.form.value.back || '',
+      deckId: this.form.value.deck || '',
+    });
+    this.flashCardService
+      .createFlashCard(newFlashCardData)
+      .subscribe(console.log);
+  }
 
   cancel() {
     return this.modalCtrl.dismiss(null, 'cancel');
