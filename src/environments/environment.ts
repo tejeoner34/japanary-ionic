@@ -14,6 +14,7 @@ export const environment = {
     measurementId: 'G-4QDF2PKVPS',
   },
   apiBaseUrl: 'http://localhost:3005/dictionary',
+  apiBaseUrlFlashcards: 'http://localhost:3005/flashcard',
 };
 
 /*

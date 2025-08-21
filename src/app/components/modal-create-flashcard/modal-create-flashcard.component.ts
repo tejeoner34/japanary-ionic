@@ -17,9 +17,11 @@ import {
   IonSelect,
   IonSelectOption,
 } from '@ionic/angular/standalone';
+import { switchMap } from 'rxjs';
 import { FlashcardsService } from 'src/app/services/flashcards.service';
 import { DeckModel } from 'src/app/services/interfaces/deck.interface';
 import { FlashCard } from 'src/app/services/interfaces/flashcard.interface';
+import { SaveImageService } from 'src/app/services/save-image.service';
 
 @Component({
   selector: 'app-modal-create-flashcard',
@@ -57,7 +59,8 @@ export class ModalCreateFlashcardComponent implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private fb: FormBuilder,
-    private flashCardService: FlashcardsService
+    private flashCardService: FlashcardsService,
+    private saveImageService: SaveImageService
   ) {}
 
   ngOnInit() {
@@ -81,17 +84,32 @@ export class ModalCreateFlashcardComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-    const newFlashCardData = new FlashCard({
-      front: this.form.value.front || '',
-      back: this.form.value.back || '',
-      deckId: this.form.value.deck || '',
-    });
-    this.flashCardService
-      .createFlashCard(newFlashCardData)
+    this.saveImageService
+      .uploadImages(this.saveImageService.images())
+      .pipe(
+        switchMap((uploadedImages) => {
+          const newFlashCardData = new FlashCard({
+            front: this.form.value.front || '',
+            back: this.form.value.back || '',
+            deckId: this.form.value.deck || '',
+            imagesUrl: uploadedImages,
+          });
+          return this.flashCardService.createFlashCard(newFlashCardData);
+        })
+      )
       .subscribe(console.log);
   }
 
   cancel() {
     return this.modalCtrl.dismiss(null, 'cancel');
+  }
+
+  handleTextareaPaste(event: ClipboardEvent) {
+    const clipboardItems = event.clipboardData?.items;
+    if (!clipboardItems) return;
+    for (let i = 0; i < clipboardItems.length; i++) {
+      const file = clipboardItems[i].getAsFile();
+      if (file) this.saveImageService.addImage(file);
+    }
   }
 }

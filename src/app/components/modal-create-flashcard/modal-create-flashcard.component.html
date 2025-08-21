@@ -46,6 +46,7 @@
           label="Back"
           placeholder="Type something here"
           errorText="Add the back of the card"
+          (paste)="handleTextareaPaste($event)"
         ></ion-textarea>
       </ion-item>
     </ion-list>

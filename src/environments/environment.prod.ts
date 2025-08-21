@@ -11,4 +11,6 @@ export const environment = {
   },
   apiBaseUrl:
     'https://express-japanary-back-production.up.railway.app/dictionary',
+  apiBaseUrlFlashcards:
+    'https://express-japanary-back-production.up.railway.app/flashcard',
 };
