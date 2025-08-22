@@ -15,6 +15,7 @@ import { DictionaryService } from '../services/dictionary.service';
 import { SearchItemSkeletonComponent } from '../components/search-item-skeleton/search-item-skeleton.component';
 import { SearchItemListComponent } from '../components/search-item-list/search-item-list.component';
 import { FlashcardsService } from '../services/flashcards.service';
+import { SampleSentencesComponent } from '../components/sample-sentences/sample-sentences.component';
 
 @Component({
   selector: 'app-search-page',
@@ -34,6 +35,7 @@ import { FlashcardsService } from '../services/flashcards.service';
     DictionarySearchFormComponent,
     SearchItemSkeletonComponent,
     SearchItemListComponent,
+    SampleSentencesComponent,
   ],
 })
 export class SearchPagePage implements OnInit {
@@ -42,9 +44,15 @@ export class SearchPagePage implements OnInit {
   public loading$ = this.dictionaryService.loading$;
   public results$ = this.dictionaryService.results$;
   public error$ = this.dictionaryService.error$;
+
+  public loadingSentences$ = this.dictionaryService.loadingSenteces$;
+  public sentencesResult$ = this.dictionaryService.sentecesResult$;
+  public errorSentences$ = this.dictionaryService.errorSentences$;
+
   @Input() set query(searchQuery: string) {
     this.searchQuery = searchQuery;
     this.dictionaryService.searchWord(searchQuery);
+    this.dictionaryService.searchSampleSentences(searchQuery);
   }
 
   searchQuery: string = '';

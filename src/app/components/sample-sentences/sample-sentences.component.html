@@ -1,0 +1,48 @@
+@if(loading$ | async) {
+<ion-list>
+  @for(i of numberOfItemsArray; track i) {
+  <ion-item>
+    <ion-label>
+      <h3>
+        <ion-skeleton-text
+          [animated]="true"
+          style="width: 80%"
+        ></ion-skeleton-text>
+      </h3>
+      <p>
+        <ion-skeleton-text
+          [animated]="true"
+          style="width: 60%"
+        ></ion-skeleton-text>
+      </p>
+      <p>
+        <ion-skeleton-text
+          [animated]="true"
+          style="width: 30%"
+        ></ion-skeleton-text>
+      </p>
+    </ion-label>
+  </ion-item>
+  }
+</ion-list>
+} @else {
+<ion-list>
+  @for(sentence of sentences$ | async; track sentence) {
+  <ion-item>
+    <ion-label>
+      @for (word of sentence.japanese; track word) {
+      <p>
+        <ruby>
+          {{ word.word }}
+          @if (word.furigana) {
+          <rt class="text-xs">{{ word.furigana }}</rt>
+          }
+        </ruby>
+      </p>
+      }
+      <p>{{ sentence.english }}</p>
+    </ion-label>
+  </ion-item>
+  }
+</ion-list>
+}

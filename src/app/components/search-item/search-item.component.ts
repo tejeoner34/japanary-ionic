@@ -44,6 +44,9 @@ export class SearchItemComponent {
   async onCreateCard() {
     const modal = await this.modalCtrl.create({
       component: ModalCreateFlashcardComponent,
+      componentProps: {
+        searchResult: this.searchResult,
+      },
     });
     modal.present();
 

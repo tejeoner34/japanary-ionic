@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   IonButton,
@@ -20,8 +20,10 @@ import {
 import { switchMap } from 'rxjs';
 import { FlashcardsService } from 'src/app/services/flashcards.service';
 import { DeckModel } from 'src/app/services/interfaces/deck.interface';
+import { SearchResult } from 'src/app/services/interfaces/dictionary.interface';
 import { FlashCard } from 'src/app/services/interfaces/flashcard.interface';
 import { SaveImageService } from 'src/app/services/save-image.service';
+import { createFormBackTemplate } from 'src/utils/template-formatting';
 
 @Component({
   selector: 'app-modal-create-flashcard',
@@ -47,6 +49,7 @@ import { SaveImageService } from 'src/app/services/save-image.service';
   ],
 })
 export class ModalCreateFlashcardComponent implements OnInit {
+  @Input() searchResult: SearchResult = {} as SearchResult;
   form = this.fb.group({
     deck: [''],
     isDefaultDeck: [false],
@@ -70,6 +73,8 @@ export class ModalCreateFlashcardComponent implements OnInit {
       this.form.patchValue({
         deck: this.defaultDeck.id,
         isDefaultDeck: this.defaultDeck.isDefault,
+        front: this.searchResult.slug || '',
+        back: createFormBackTemplate(this.searchResult) || '',
       });
     });
   }
