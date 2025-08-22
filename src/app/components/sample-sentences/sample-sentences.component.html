@@ -1,6 +1,10 @@
-@if(loading$ | async) {
+@if (loading$ | async) {
+<!-- skeleton -->
 <ion-list>
-  @for(i of numberOfItemsArray; track i) {
+  <ion-list-header>
+    <ion-label>Sample Senteces</ion-label>
+  </ion-list-header>
+  @for (i of numberOfItemsArray; track i) {
   <ion-item>
     <ion-label>
       <h3>
@@ -27,7 +31,15 @@
 </ion-list>
 } @else {
 <ion-list>
-  @for(sentence of sentences$ | async; track sentence) {
+  <ion-list-header>
+    <ion-label>Sample Senteces</ion-label>
+  </ion-list-header>
+
+  @if ((sentences$ | async)?.length === 0) {
+  <ion-item>
+    <ion-label>No sample sentences</ion-label>
+  </ion-item>
+  } @else { @for (sentence of sentences$ | async; track sentence) {
   <ion-item>
     <ion-label>
       @for (word of sentence.japanese; track word) {
@@ -43,6 +55,6 @@
       <p>{{ sentence.english }}</p>
     </ion-label>
   </ion-item>
-  }
+  } }
 </ion-list>
 }

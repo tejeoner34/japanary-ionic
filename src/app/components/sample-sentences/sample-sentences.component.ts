@@ -5,6 +5,8 @@ import {
   IonItem,
   IonList,
   IonSkeletonText,
+  IonButton,
+  IonListHeader,
 } from '@ionic/angular/standalone';
 import { DictionaryService } from 'src/app/services/dictionary.service';
 import { ExampleSentence } from 'src/app/services/interfaces/dictionary.interface';
@@ -14,7 +16,15 @@ import { ExampleSentence } from 'src/app/services/interfaces/dictionary.interfac
   templateUrl: './sample-sentences.component.html',
   styleUrls: ['./sample-sentences.component.scss'],
   standalone: true,
-  imports: [IonSkeletonText, IonList, IonItem, IonLabel, AsyncPipe],
+  imports: [
+    IonListHeader,
+    IonButton,
+    IonSkeletonText,
+    IonList,
+    IonItem,
+    IonLabel,
+    AsyncPipe,
+  ],
 })
 export class SampleSentencesComponent implements OnInit {
   dictionaryService = inject(DictionaryService);
