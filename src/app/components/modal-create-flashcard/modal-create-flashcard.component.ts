@@ -16,8 +16,10 @@ import {
   IonCheckbox,
   IonSelect,
   IonSelectOption,
+  IonLabel,
 } from '@ionic/angular/standalone';
 import { switchMap } from 'rxjs';
+import { DictionaryService } from 'src/app/services/dictionary.service';
 import { FlashcardsService } from 'src/app/services/flashcards.service';
 import { DeckModel } from 'src/app/services/interfaces/deck.interface';
 import { SearchResult } from 'src/app/services/interfaces/dictionary.interface';
@@ -31,6 +33,7 @@ import { createFormBackTemplate } from 'src/utils/template-formatting';
   styleUrls: ['./modal-create-flashcard.component.scss'],
   standalone: true,
   imports: [
+    IonLabel,
     IonCheckbox,
     IonSelect,
     IonSelectOption,
@@ -63,7 +66,8 @@ export class ModalCreateFlashcardComponent implements OnInit {
     private modalCtrl: ModalController,
     private fb: FormBuilder,
     private flashCardService: FlashcardsService,
-    private saveImageService: SaveImageService
+    private saveImageService: SaveImageService,
+    private dictionaryService: DictionaryService
   ) {}
 
   ngOnInit() {
@@ -75,6 +79,12 @@ export class ModalCreateFlashcardComponent implements OnInit {
         isDefaultDeck: this.defaultDeck.isDefault,
         front: this.searchResult.slug || '',
         back: createFormBackTemplate(this.searchResult) || '',
+      });
+    });
+
+    this.dictionaryService.aiResponse$.subscribe((response) => {
+      this.form.patchValue({
+        back: this.form.value.back + '\n' + '\n' + response,
       });
     });
   }
@@ -116,5 +126,10 @@ export class ModalCreateFlashcardComponent implements OnInit {
       const file = clipboardItems[i].getAsFile();
       if (file) this.saveImageService.addImage(file);
     }
+  }
+
+  onRequestAiResponse() {
+    if (this.form.value.front)
+      this.dictionaryService.searchAi(this.form.value.front);
   }
 }
