@@ -112,7 +112,9 @@ export class ModalCreateFlashcardComponent implements OnInit {
           return this.flashCardService.createFlashCard(newFlashCardData);
         })
       )
-      .subscribe(console.log);
+      .subscribe(() => {
+        this.modalCtrl.dismiss();
+      });
   }
 
   cancel() {
