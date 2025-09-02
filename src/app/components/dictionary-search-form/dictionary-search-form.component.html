@@ -1,10 +1,16 @@
-<ion-searchbar
-  show-clear-button="always"
-  placeholder="検索"
-  [value]="searchQuery"
-  (ionInput)="onInputChange($event)"
-  (ionChange)="onNavigate()"
-></ion-searchbar>
+<ion-item color="none" lines="none">
+  <ion-searchbar
+    show-clear-button="always"
+    placeholder="検索"
+    [value]="searchQuery"
+    (ionInput)="onInputChange($event)"
+    (ionChange)="onNavigate()"
+  ></ion-searchbar>
+  <ion-button slot="end" size="large" (click)="onPasteClipboard()">
+    <ion-icon slot="icon-only" name="clipboard-outline"></ion-icon>
+  </ion-button>
+</ion-item>
+
 <ion-button
   expand="block"
   color="dark"
