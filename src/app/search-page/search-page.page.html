@@ -18,8 +18,11 @@
   <app-sample-sentences></app-sample-sentences>
 </ion-content>
 
-<ion-footer class="ion-padding" [translucent]="true">
-  <app-dictionary-search-form
-    [searchQuery]="searchQuery"
-  ></app-dictionary-search-form>
+<ion-footer>
+  <ion-toolbar>
+    <app-dictionary-search-form
+      class="ion-padding"
+      [searchQuery]="searchQuery"
+    ></app-dictionary-search-form>
+  </ion-toolbar>
 </ion-footer>

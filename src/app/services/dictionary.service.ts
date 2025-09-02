@@ -81,4 +81,8 @@ export class DictionaryService {
       )
       .subscribe((result) => this.sentecesResultSubject.next(result));
   }
+
+  resetAiResponse() {
+    this.aiResponseSubject.next('');
+  }
 }

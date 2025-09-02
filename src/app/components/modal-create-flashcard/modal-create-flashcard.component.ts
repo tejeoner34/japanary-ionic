@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   IonButton,
@@ -18,7 +18,7 @@ import {
   IonSelectOption,
   IonLabel,
 } from '@ionic/angular/standalone';
-import { switchMap } from 'rxjs';
+import { Subscription, switchMap } from 'rxjs';
 import { DictionaryService } from 'src/app/services/dictionary.service';
 import { FlashcardsService } from 'src/app/services/flashcards.service';
 import { DeckModel } from 'src/app/services/interfaces/deck.interface';
@@ -51,8 +51,9 @@ import { createFormBackTemplate } from 'src/utils/template-formatting';
     ReactiveFormsModule,
   ],
 })
-export class ModalCreateFlashcardComponent implements OnInit {
+export class ModalCreateFlashcardComponent implements OnInit, OnDestroy {
   @Input() searchResult: SearchResult = {} as SearchResult;
+  subs: Subscription[] = [];
   form = this.fb.group({
     deck: [''],
     isDefaultDeck: [false],
@@ -69,24 +70,34 @@ export class ModalCreateFlashcardComponent implements OnInit {
     private saveImageService: SaveImageService,
     private dictionaryService: DictionaryService
   ) {}
+  ngOnDestroy(): void {
+    console.log('ModalCreateFlashcardComponent destroyed');
+    this.subs.forEach((s) => s.unsubscribe());
+    this.subs = [];
+    this.dictionaryService.resetAiResponse();
+  }
 
   ngOnInit() {
-    this.flashCardService.decks$.subscribe((decks) => {
-      this.decks = decks;
-      this.defaultDeck = this.flashCardService.defaultDeck;
-      this.form.patchValue({
-        deck: this.defaultDeck.id,
-        isDefaultDeck: this.defaultDeck.isDefault,
-        front: this.searchResult.slug || '',
-        back: createFormBackTemplate(this.searchResult) || '',
-      });
-    });
+    this.subs.push(
+      this.flashCardService.decks$.subscribe((decks) => {
+        this.decks = decks;
+        this.defaultDeck = this.flashCardService.defaultDeck;
+        this.form.patchValue({
+          deck: this.defaultDeck.id,
+          isDefaultDeck: this.defaultDeck.isDefault,
+          front: this.searchResult.slug || '',
+          back: createFormBackTemplate(this.searchResult) || '',
+        });
+      })
+    );
 
-    this.dictionaryService.aiResponse$.subscribe((response) => {
-      this.form.patchValue({
-        back: this.form.value.back + '\n' + '\n' + response,
-      });
-    });
+    this.subs.push(
+      this.dictionaryService.aiResponse$.subscribe((response) => {
+        this.form.patchValue({
+          back: this.form.value.back + '\n\n' + response,
+        });
+      })
+    );
   }
 
   onWillDismiss(event: CustomEvent<any>) {
